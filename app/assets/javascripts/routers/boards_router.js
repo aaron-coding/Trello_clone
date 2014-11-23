@@ -2,23 +2,34 @@ TrelloClone.Routers.Router = Backbone.Router.extend({
   initialize: function (options) {
     this.$main = options.$main,
     this.$backdrop = options.$backdrop,
-    this.collection = options.collection
+    this.allBoards = options.allBoards
   },
+  
   routes: {
     "": "boardsIndex",
     "boards/:id": "boardShow"
   },
   
   boardsIndex: function(){
-    this.collection.fetch();
-    // console.log(this.collection);
-    var indexView = new TrelloClone.Views.BoardsIndex({collection: this.collection});
-    var content = indexView.render().$el
-    this.$main.html(content)
-    // console.log("I'm in Boards Index");
+    this.allBoards.fetch();
+    var indexView = new TrelloClone.Views.BoardsIndex({collection: this.allBoards});
+    this.swapView(indexView)
   },
   
   boardShow: function(id){
-    console.log(id)
+    var board =  this.allBoards.getOrFetch(id);
+    // var board = new TrelloClone.Models.Board({id: id});
+    board.fetch();
+    var showView = new TrelloClone.Views.BoardShow({ board: board});
+    this.swapView(showView)
+  },
+  
+  swapView: function(view){
+    if (this.currentView) {
+      this.currentView.remove();
+    }
+    this.currentView = view;    
+    this.$main.html(this.currentView.render().$el);
+
   }
 });

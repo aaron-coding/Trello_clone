@@ -1,6 +1,20 @@
-.board-index-item {
-  height: 100px;
+.board-index-item, .single-list {
+  min-height: 100px;
   background-color: lightblue;
   border: 1px dotted darkblue;
   margin: 5px;
+}
+
+
+.back-to-home {
+  display: block;
+  clear: both;
+}
+
+.list-card {
+  background-color: white;
+  border: 1px solid lightblue;
+  border-radius: 5px;
+  padding: 2px;
+  padding-left: 8px;
 }
