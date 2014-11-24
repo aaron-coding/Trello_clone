@@ -10,21 +10,21 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
     this.listenTo(this.lists, "add", this.addList);
 
   },
-  // events: {
- //    "sortstart .cards": "handleStart",
- //    "sortreceive .cards": "handleReceive"
- //  },
- //  handleStart: function(event, ui){
- //     // console.log("starting");
- //     // console.log(event.target);  //div that the thing came from
- //  },
- //  handleReceive: function(event, ui){
- //    console.log("receiving");
- //    console.log(this.list.id) //new list_id to set the model
- //    console.log(ui.sender)
- //    debugger
- //    console.log(event.target);  //div that the thing went to
- //  },
+  events: {
+    "sortstop #board-lists": "handleStop"
+  },
+  
+  handleStop: function(){
+    this.ordSort();
+  },
+  
+  ordSort: function(){
+    this.$el.find(".single-list").each(function(index, listInDOM) {
+      var listInCollection = this.lists.get($(listInDOM).data("id"))
+      listInCollection.set({ord: index})
+      listInCollection.save()
+    }.bind(this))
+  },
   
   render: function(){
     var content = this.template({board: this.board});

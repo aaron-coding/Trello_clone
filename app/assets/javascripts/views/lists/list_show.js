@@ -3,10 +3,12 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
   template: JST['lists/show'],
   
   initialize: function(options){
-    this.$el = $('<ul>').addClass('single-list col-md-3');
     this.list = options.list;
+    this.$el = $('<ul>').addClass('single-list col-md-3');
+    this.$el.attr("data-id", this.list.id)
     this.cards = this.list.cards();
     this.addCards();
+    
   },
   
   events: {
@@ -30,7 +32,7 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
     card.save({}, {
       success: function(){
         this.cards.add(card);
-        this.ordSort();
+        this.ordSort(); //sort again once the new card is in collection.
       }.bind(this)
     })
     
