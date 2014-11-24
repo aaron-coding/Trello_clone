@@ -11,15 +11,13 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
   
   events: {
     "sortremove .cards": "handleRemove",
-    "sortreceive .cards": "handleReceive"
-  },
-
-  render: function(){
-    var content = this.template({list: this.list});
-    this.$el.html(content);
-    return this;
+    "sortreceive .cards": "handleReceive",
+    "sortstop .cards": "handleStop"
   },
   
+  handleStop: function(event, ui){
+    this.ordSort();
+  },
   handleRemove: function(event, ui){
      this.cards.remove(ui.item.data("id")) //remove model from collection
   },
@@ -31,14 +29,29 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
     })
     card.save({}, {
       success: function(){
-        this.cards.add(card)
+        this.cards.add(card);
+        this.ordSort();
       }.bind(this)
     })
-
+    
+  },
+  
+  ordSort: function(){
+    this.$el.find(".list-card").each(function(index, cardInDOM) {
+      var cardInCollection = this.cards.get($(cardInDOM).data("id"))
+      cardInCollection.set({ord: index})
+      cardInCollection.save()
+    }.bind(this))
   },
   
   onRender: function(){
     this.$('.cards').sortable({ connectWith: ".cards" });
+  },
+
+  render: function(){
+    var content = this.template({list: this.list});
+    this.$el.html(content);
+    return this;
   },
   
   addCards: function(){
