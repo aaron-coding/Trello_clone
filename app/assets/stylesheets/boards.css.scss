@@ -1,7 +1,7 @@
 .board-index-item, .single-list {
   min-height: 55px;
   background-color: lightblue;
-  border: 1px dotted darkblue;
+  border: 1px solid darkblue;
   margin: 5px;
 }
 
@@ -18,4 +18,16 @@
   padding: 2px;
   padding-left: 8px;
   margin: 5px 0px;
+}
+
+.cards {
+  min-height: 30px; //This is to allow cards to be dropped onto empty list
+}
+
+.clearfix:after { 
+   content: " "; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
 }
