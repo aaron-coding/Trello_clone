@@ -1,14 +1,16 @@
 TrelloClone.Views.BoardsIndex = Backbone.CompositeView.extend({
   template: JST['boards/index'],
-  initialize: function() {
+  
+  initialize: function(options) {
+    this.collection = options.collection;
     this.listenTo(this.collection, "sync", this.render);
     this.listenTo(this.collection, "add", this.addBoard);
     this.collection.each(function(board){
-      this.addSubview(board)
+      this.addBoard(board)
     }.bind(this))
   },
   render: function(){
-    var content = this.template({boards: this.collection});
+    var content = this.template(); //removed boards collection
     this.$el.html(content); 
     this.attachSubviews();
     return this;
