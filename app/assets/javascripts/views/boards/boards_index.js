@@ -3,7 +3,7 @@ TrelloClone.Views.BoardsIndex = Backbone.CompositeView.extend({
   
   initialize: function(options) {
     this.collection = options.collection;
-    this.listenTo(this.collection, "sync", this.render);
+    this.listenTo(this.collection, "sync", this.render); //is this line necessary?
     this.listenTo(this.collection, "add", this.addBoard);
     this.collection.each(function(board){
       this.addBoard(board)

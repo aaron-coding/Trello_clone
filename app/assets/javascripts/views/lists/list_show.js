@@ -38,7 +38,11 @@ TrelloClone.Views.ListsShow = Backbone.CompositeView.extend({
     }.bind(this))
   },
   onRender: function(){
-    this.$('.cards').sortable({ connectWith: ".cards" });
+    this.$('.cards').sortable({ 
+      connectWith: ".cards", 
+      placeholder: "before-placed-highlight list-card", 
+      forcePlaceholderSize: true
+   });
   },
   render: function(){
     var content = this.template({list: this.list});
