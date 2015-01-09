@@ -1,1 +1,1 @@
-TrelloClone::Application.config.secret_token = ENV['SECRET_KEY_BASE']
+TrelloClone::Application.config.secret_token = ENV["secret_key_base"]
